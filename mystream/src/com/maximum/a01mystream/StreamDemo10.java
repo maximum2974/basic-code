@@ -70,7 +70,7 @@ public class StreamDemo10 {
                             }
                         }));
 
-        System.out.println(map);s.split("-")[2]
+        System.out.println(map);
 
         Map<String, Integer> map2 = list.stream()
                 .filter(s -> "男".equals(s.split("-")[1]))
