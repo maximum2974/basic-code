@@ -1,4 +1,4 @@
-package com.maximum.test4;
+package com.maximum.test4case1;
 
 import java.util.Random;
 
