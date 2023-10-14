@@ -23,6 +23,7 @@ public class CharStreamDemo1 {
         //2.在读取之后，方法的底层还会进行解码并转成十进制
         //最终把这个十进制作为返回值
         //这个十进制的数据也表示在字符集上的数字
+        //看到中文汉字, 就是把这些十进制数据, 再进行强转就可以了
         while((ch = fr.read()) != -1){
             System.out.print((char)ch);
         }

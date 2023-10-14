@@ -1,0 +1,5 @@
+name=zhangsan
+age=23
+gender=男
+height=189.32
+hobby=睡觉
