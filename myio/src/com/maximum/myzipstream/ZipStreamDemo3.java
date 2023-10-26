@@ -29,6 +29,13 @@ public class ZipStreamDemo3 {
         zos.close();
     }
 
+    /**
+     * 作用: 获取src里面的每一个文件, 变成ZipEntry对象, 放入到压缩包当中
+     * @param src 数据源
+     * @param zos 压缩流
+     * @param name 压缩包内部的路径
+     * @throws IOException
+     */
     public static void toZip(File src,ZipOutputStream zos,String name) throws IOException {
         //1. 进入src文件夹
         File[] files = src.listFiles();

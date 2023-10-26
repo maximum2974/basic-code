@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ConvertStreamDemo4 {
+public class  ConvertStreamDemo4 {
     public static void main(String[] args) throws IOException {
         /*
         利用字节流读取文件中的数据，每次读一整行，而且不能出现乱码
