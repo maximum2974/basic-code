@@ -50,7 +50,7 @@ public class RegexDemo3 {
 
         // 必须是数字和字符 必须是4位
         System.out.println("23dF".matches("[a-zA-Z0-9]{4}"));//true
-        System.out.println("23 F".matches("[a-zA-Z0-9]{4}"));//false
+        System.out.println("23_F".matches("[a-zA-Z0-9]{4}"));//false
         System.out.println("23dF".matches("[\\w&&[^_]]{4}"));//true
         System.out.println("23_F".matches("[\\w&&[^_]]{4}"));//false
     }

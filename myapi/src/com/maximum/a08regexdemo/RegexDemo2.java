@@ -46,6 +46,8 @@ public class RegexDemo2 {
         System.out.println("0".matches("[a-d[m-p]]")); //false
 
         // [a-z&&[def]] a-z和def的交集。为:d，e，f
+        //细节: 如果要求两个范围的交集, 那么需要写符号 &&
+        //如果写成了一个& , 那么此时&表示就不是交集了, 而是一个简简单单的&符号
         System.out.println("----------5------------");
         System.out.println("a".matches("[a-z&[def]]")); //true
         System.out.println("d".matches("[a-z&&[def]]")); //true
