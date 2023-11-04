@@ -24,6 +24,9 @@ public class FunctionDemo2 {
             }
         }).forEach(s -> System.out.println(s));*/
 
+        //1.方法需要已经存在
+        //2.方法的形参和返回值需要跟抽象方法的形参和返回值保持一致
+        //3.方法的功能需要把形参的字符串转换成整数
         list.stream()
                 .map(Integer::parseInt)
                 .forEach(s -> System.out.println(s));

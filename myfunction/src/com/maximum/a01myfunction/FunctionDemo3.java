@@ -20,6 +20,9 @@ public class FunctionDemo3 {
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list, "张无忌","周芷若","赵敏","张强","张三丰");
 
+        //过滤数据(只要以张开头,而且名字是3个字的)
+        //list.stream().filter(s -> s.startsWith("张")).filter(s -> s.length() == 3).forEach(s -> System.out.println(s));
+
         /*list.stream().filter(new Predicate<String>() {
             @Override
             public boolean test(String s) {
@@ -27,6 +30,12 @@ public class FunctionDemo3 {
             }
         }).forEach(s -> System.out.println(s));*/
 
+        //其他类
+        /*StringOperation so = new StringOperation();
+        list.stream().filter(so::stringJudge)
+                .forEach(s -> System.out.println(s));*/
+
+        //本类
         //静态方法中是没有this的
         list.stream().filter(new FunctionDemo3()::stringJudge)
                 .forEach(s -> System.out.println(s));

@@ -28,6 +28,9 @@ public class FunctionDemo1 {
         //2、被引用的方法需要已经存在
         //3、被引用方法的形参和返回值需要跟抽象方法的形参和返回值一致
         //4、被引用方法的功能需要满足当前需求
+
+        //表示引用FunctionDemo1类里面的subtraction方法
+        //把这个方法当做抽象方法的方法体
         Arrays.sort(arr, FunctionDemo1::subtraction);
         System.out.println(Arrays.toString(arr));
 

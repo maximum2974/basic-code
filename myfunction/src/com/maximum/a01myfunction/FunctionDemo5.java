@@ -32,6 +32,14 @@ public class FunctionDemo5 {
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list, "aaa","bbb","ccc","ddd");
 
+        //变成大写后输出
+        /*list.stream().map(new Function<String, String>() {
+            @Override
+            public String apply(String s) {
+                return s.toUpperCase();
+            }
+        }).forEach(s -> System.out.println(s));*/
+
         //map(String::toUpperCase)
         //拿着流里面的每一个数据，去调用String类中的toUpperCase方法，方法的返回值就是转换之后的结果
         list.stream().map(String::toUpperCase).forEach(s -> System.out.println(s));
