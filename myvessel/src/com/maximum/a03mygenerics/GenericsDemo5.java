@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GenericsDemo5 {
     public static void main(String[] args) {
         /*
-        继承不具备继承性，但是数据具备继承性
+        泛型不具备继承性，但是数据具备继承性
          */
         //创建集合的对象
         ArrayList<Ye> list1 = new ArrayList<>();
@@ -30,3 +30,4 @@ public class GenericsDemo5 {
 
     }
 }
+
