@@ -6,12 +6,21 @@ import java.util.Date;
 
 public class DateDemo3 {
     public static void main(String[] args) throws ParseException {
-        /*
-            public simpleDateFormat() 默认格式
-            public simpleDateFormat(String pattern) 指定格式
-            public final string format(Date date) 格式化(日期对象 ->字符串)
-            public Date parse(string source) 解析(字符串 ->日期对象)
+        /**
+         * public simpleDateFormat() 默认格式
+         * public simpleDateFormat(String pattern) 指定格式
+         * public final string format(Date date) 格式化(日期对象 ->字符串)
+         * public Date parse(string source) 解析(字符串 ->日期对象)
         */
+
+        /**
+         * y 年
+         * M 月
+         * d 日
+         * H 时
+         * m 分
+         * s 秒
+         */
 
         //1、定义一个字符串用来表示时间
         String str = "2023-11-11 11:11:11";

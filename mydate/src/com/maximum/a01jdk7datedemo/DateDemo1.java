@@ -13,8 +13,8 @@ public class DateDemo1 {
          */
 
         //1、创建对象表示一个时间
-        Date d = new Date();
-        System.out.println(d);
+        Date d1 = new Date();
+        System.out.println(d1);
 
         //2、创建对象表示一个指定的时间
         Date d2 = new Date(0L);
