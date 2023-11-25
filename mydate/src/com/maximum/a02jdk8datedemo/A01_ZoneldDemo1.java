@@ -6,9 +6,9 @@ import java.util.Set;
 public class A01_ZoneldDemo1 {
     public static void main(String[] args) {
         /*
-        static Set<string> getAvailableZoneIds() 获取Java中支持的所有时区
-        static ZoneId systemDefault() 获取系统默认时区
-        static Zoneld of(string zoneld) 获取一个指定时区
+            static Set<string> getAvailableZoneIds() 获取Java中支持的所有时区
+            static ZoneId systemDefault() 获取系统默认时区
+            static Zoneld of(string zoneld) 获取一个指定时区
         */
 
         //1、获取所有的时区名称

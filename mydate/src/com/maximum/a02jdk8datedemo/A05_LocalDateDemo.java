@@ -25,8 +25,8 @@ public class A05_LocalDateDemo {
         //获取月
         //方式一:
         Month m = ldDate.getMonth();
-        System.out.println(m);
-        System.out.println(m.getValue());
+        System.out.println(m); //JANUARY
+        System.out.println(m.getValue()); //1
         System.out.println("=========================================");
 
         //方式二:
@@ -49,13 +49,13 @@ public class A05_LocalDateDemo {
         System.out.println(dayOfWeek.getValue());
 
         //is开头的方法表示判断
-        System.out.println(ldDate.isBefore(ldDate));
-        System.out.println(ldDate.isAfter(ldDate));
+        System.out.println(ldDate.isBefore(ldDate)); //false
+        System.out.println(ldDate.isAfter(ldDate)); //false
 
         //with开头的方法表示判断，只能修改年月日
         LocalDate withLocalDate = ldDate.withYear(2000);
-        System.out.println(withLocalDate);
-        System.out.println(withLocalDate == ldDate);
+        System.out.println(withLocalDate); //2000-01-01
+        System.out.println(withLocalDate == ldDate); //false
 
         System.out.println("========================================");
 
@@ -67,7 +67,7 @@ public class A05_LocalDateDemo {
         LocalDate plusLocalDate = ldDate.plusDays(1);
         System.out.println(plusLocalDate);
 
-        LocalDate birDate = LocalDate.of(2000, 1, 1);
+        LocalDate birDate = LocalDate.of(2003, 11, 23);
         LocalDate nowDate1 = LocalDate.now();
 
         MonthDay birMd = MonthDay.of(birDate.getMonthValue(), birDate.getDayOfMonth());
