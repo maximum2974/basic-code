@@ -1,6 +1,7 @@
 package com.maximum.myLeetCodeTree;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class TreeNode {
     int val;
@@ -64,37 +65,66 @@ class TreeUtils {
         }
         return root;
     }
+
+    public String treeToString(TreeNode root) {
+        if (root == null) return "[]";
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node == null) {
+                sb.append("null,");
+            } else {
+                sb.append(node.val).append(",");
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }
+        }
+
+        // 去掉尾部多余的 "null,"
+        String result = sb.toString();
+        while (result.endsWith("null,")) {
+            result = result.substring(0, result.length() - 5); // 去掉 "null,"
+        }
+
+        return "[" + result.substring(0, result.length() - 1) + "]"; // 去掉最后一个逗号
+    }
 }
 
 public class Solution {
-    Map<Integer, Integer> map;
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        map = new HashMap<>();
-        for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i], i);
+    public int[] findMode(TreeNode root){
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        if(root == null) return list.stream().mapToInt(Integer::intValue).toArray();
+        searchBST(root, map);
+        List<Map.Entry<Integer, Integer>> mapList = map.entrySet().stream()
+                .sorted((c1, c2) -> c2.getValue().compareTo(c1.getValue()))
+                .collect(Collectors.toList());
+        list.add(mapList.get(0).getKey());
+        for (int i = 1; i < mapList.size(); i++) {
+            if(mapList.get(i).getValue() == mapList.get(0).getValue()){
+                list.add(mapList.get(i).getKey());
+            }else{
+                break;
+            }
         }
-        return findNode(preorder, 0, preorder.length, inorder, 0, inorder.length);
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    public TreeNode findNode(int[] preorder, int preBegin, int preEnd, int[] inorder, int inBegin, int inEnd) {
-        if(preBegin >= preEnd || inBegin >= inEnd){
-            return null;
-        }
-        int rootIndex = map.get(preorder[preBegin]);
-        TreeNode root = new TreeNode(inorder[rootIndex]);
-        int lenOfLeft = rootIndex - inBegin;
-        root.left = findNode(preorder, preBegin + 1, preBegin + lenOfLeft + 1,
-                inorder, inBegin, rootIndex);
-        root.right = findNode(preorder, preBegin + lenOfLeft + 1, preEnd,
-                inorder, rootIndex + 1, inEnd);
-
-        return root;
+    void searchBST(TreeNode curr, Map<Integer, Integer> map){
+        if(curr == null) return;
+        map.put(curr.val, map.getOrDefault(curr.val, 0) + 1);
+        searchBST(curr.left, map);
+        searchBST(curr.right, map);
     }
 
     public static void main(String[] args) {
         TreeUtils treeUtils = new TreeUtils();
-        String data = "[5,4,8,11,null,13,4,7,2,null,null,5,1]";
+        String data = "[1,null,2,2]";
         TreeNode root = treeUtils.buildTree(data);
         Solution solution = new Solution();
+
     }
 }
