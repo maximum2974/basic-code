@@ -21,12 +21,12 @@ public class draft {
 //        Thread myThread = new Thread(new MyRunnable());
 //        myThread.start();
 
-        class MyTask implements Runnable{
+        /*class MyTask implements Runnable{
             public void run(){
                 System.out.println("MyTask is running...");
             }
         }
         Executor executor = Executors.newFixedThreadPool(3);
-        executor.execute(new MyTask());
+        executor.execute(new MyTask());*/
     }
 }
