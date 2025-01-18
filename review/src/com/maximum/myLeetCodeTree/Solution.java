@@ -93,31 +93,56 @@ class TreeUtils {
     }
 }
 
-public class Solution {
-    public int[] findMode(TreeNode root){
-        Map<Integer, Integer> map = new HashMap<>();
-        List<Integer> list = new ArrayList<>();
-        if(root == null) return list.stream().mapToInt(Integer::intValue).toArray();
-        searchBST(root, map);
-        List<Map.Entry<Integer, Integer>> mapList = map.entrySet().stream()
-                .sorted((c1, c2) -> c2.getValue().compareTo(c1.getValue()))
-                .collect(Collectors.toList());
-        list.add(mapList.get(0).getKey());
-        for (int i = 1; i < mapList.size(); i++) {
-            if(mapList.get(i).getValue() == mapList.get(0).getValue()){
-                list.add(mapList.get(i).getKey());
-            }else{
-                break;
-            }
-        }
-        return list.stream().mapToInt(Integer::intValue).toArray();
+class Solution {
+    public void solveSudoku(char[][] board) {
+        solveSudokuHelper(board);
     }
 
-    void searchBST(TreeNode curr, Map<Integer, Integer> map){
-        if(curr == null) return;
-        map.put(curr.val, map.getOrDefault(curr.val, 0) + 1);
-        searchBST(curr.left, map);
-        searchBST(curr.right, map);
+    private boolean solveSudokuHelper(char[][] board){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                if (board[i][j] != '.'){
+                    continue;
+                }
+                for (char k = '1'; k <= '9'; k++){
+                    if (isValidSudoku(i, j, k, board)){
+                        board[i][j] = k;
+                        if (solveSudokuHelper(board)){
+                            return true;
+                        }
+                        board[i][j] = '.';
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isValidSudoku(int row, int col, char val, char[][] board){
+        // 同行是否重复
+        for (int i = 0; i < 9; i++){
+            if (board[row][i] == val){
+                return false;
+            }
+        }
+        // 同列是否重复
+        for (int j = 0; j < 9; j++){
+            if (board[j][col] == val){
+                return false;
+            }
+        }
+        // 9宫格里是否重复
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i < startRow + 3; i++){
+            for (int j = startCol; j < startCol + 3; j++){
+                if (board[i][j] == val){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
