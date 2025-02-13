@@ -1,47 +1,55 @@
 package com.maximum.myLeetCode;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int v = scanner.nextInt();
-        int e = scanner.nextInt();
-        int[][] grid = new int[v + 1][e + 1];
-        for (int i = 0; i <= v; i++) {
-            Arrays.fill(grid[i], 10001);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        List<List<Integer>> umap = new ArrayList<>();
+        int[] inDegree = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            umap.add(new ArrayList<>());
         }
-        for (int i = 0; i < e; i++) {
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
-            int k = scanner.nextInt();
-            grid[x][y] = k;
-            grid[y][x] = k;
+
+        for (int i = 0; i < m; i++) {
+            int s = scanner.nextInt();
+            int t = scanner.nextInt();
+            umap.get(s).add(t);
+            inDegree[t]++;
         }
-        int[] minDist = new int[v + 1];
-        Arrays.fill(minDist, 10001);
-        boolean[] isInTree = new boolean[v + 1];
-        for (int i = 1; i < v; i++) {
-            int cur = -1;
-            int minVal = Integer.MAX_VALUE;
-            for (int j = 1; j <= v; j++) {
-                if(!isInTree[j] && minDist[j] < minVal){
-                    minVal = minDist[j];
-                    cur = j;
-                }
-            }
-            isInTree[cur] = true;
-            for (int j = 1; j <= v; j++) {
-                if(!isInTree[j] && grid[cur][j] < minDist[j]){
-                    minDist[j] = grid[cur][j];
-                }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if(inDegree[i] == 0){
+                queue.add(i);
             }
         }
-        int result = 0;
-        for (int i = 2; i <= v; i++) {
-            result += minDist[i];
+
+        List<Integer> result = new ArrayList<>();
+
+        while(!queue.isEmpty()){
+            int cur = queue.poll();
+            result.add(cur);
+            for (int file : umap.get(cur)) {
+                inDegree[file]--;
+                if(inDegree[file] == 0){
+                    queue.add(file);
+                }
+            }
         }
-        System.out.println(result);
+
+        if(result.size() == n){
+            for (int i = 0; i < result.size(); i++) {
+                System.out.print(result.get(i));
+                if(i < result.size() - 1){
+                    System.out.println(" ");
+                }
+            }
+        }else{
+            System.out.println(-1);
+        }
     }
 }
