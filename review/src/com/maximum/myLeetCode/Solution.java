@@ -4,52 +4,39 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        int m = scanner.nextInt();
-        List<List<Integer>> umap = new ArrayList<>();
-        int[] inDegree = new int[n];
+        Solution solution = new Solution();
 
-        for (int i = 0; i < n; i++) {
+        // 测试用例 1
+        int numCourses1 = 2;
+        int[][] prerequisites1 = {{1, 0}};
+        System.out.println("Test Case 1: " + solution.canFinish(numCourses1, prerequisites1));
+    }
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] inDegree = new int[numCourses];
+        List<List<Integer>> umap = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
             umap.add(new ArrayList<>());
         }
-
-        for (int i = 0; i < m; i++) {
-            int s = scanner.nextInt();
-            int t = scanner.nextInt();
-            umap.get(s).add(t);
-            inDegree[t]++;
+        for (int[] prerequisite : prerequisites) {
+            inDegree[prerequisite[0]]++;
+            umap.get(prerequisite[1]).add(prerequisite[0]);
         }
-
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numCourses; i++) {
             if(inDegree[i] == 0){
                 queue.add(i);
             }
         }
-
-        List<Integer> result = new ArrayList<>();
-
         while(!queue.isEmpty()){
-            int cur = queue.poll();
-            result.add(cur);
-            for (int file : umap.get(cur)) {
-                inDegree[file]--;
-                if(inDegree[file] == 0){
-                    queue.add(file);
+            int pre = queue.poll();
+            numCourses--;
+            for (int cur : umap.get(pre)) {
+                if(--inDegree[cur] == 0){
+                    queue.add(cur);
                 }
             }
         }
-
-        if(result.size() == n){
-            for (int i = 0; i < result.size(); i++) {
-                System.out.print(result.get(i));
-                if(i < result.size() - 1){
-                    System.out.println(" ");
-                }
-            }
-        }else{
-            System.out.println(-1);
-        }
+        return numCourses == 0;
     }
 }
