@@ -54,7 +54,7 @@ public class Client extends JFrame implements ActionListener {
         setVisible(true);
 
         try {
-            Socket socket = new Socket("192.168.80.1", 60000);
+            Socket socket = new Socket("172.20.10.12", 60000);
             fromServer = new DataInputStream(socket.getInputStream());
             toServer = new DataOutputStream(socket.getOutputStream());
         } catch (IOException ex) {

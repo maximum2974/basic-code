@@ -1,64 +1,44 @@
 package com.maximum.myThread;
 
 import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.*;
 
-public class draft{
-    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-    private int data = 0;
-
-    public void write(int value) {
-        lock.writeLock().lock(); // 获取写锁
-        try {
-            data = value;
-            System.out.println("写 " + Thread.currentThread().getName() + ": " + data);
-        } finally {
-            lock.writeLock().unlock(); // 释放写锁
-        }
-    }
-
-    public void read() {
-        lock.readLock().lock(); // 获取读锁
-        try {
-            System.out.println("读 " + Thread.currentThread().getName() + ": " + data);
-        } finally {
-            lock.readLock().unlock(); // 释放读锁
-        }
-    }
-
+public class draft {
+    private static Thread t1, t2, t3;
     public static void main(String[] args) {
-        draft sharedResource = new draft();
-
-        // 创建读线程
-        Thread readThread1 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
-                sharedResource.read();
+        t1 = new Thread(() -> {
+            for (int i = 0; i < 2; i++) {
+                LockSupport.park();
+                System.out.println("A");
+                LockSupport.unpark(t2);
             }
         });
 
-        Thread readThread2 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
-                sharedResource.read();
+        t2 = new Thread(() -> {
+            for (int i = 0; i < 2; i++) {
+                LockSupport.park();
+                System.out.println("B");
+                LockSupport.unpark(t3);
             }
         });
 
-        // 创建写线程
-        Thread writeThread = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
-                sharedResource.write(i);
+        t3 = new Thread(() -> {
+            for (int i = 0; i < 2; i++) {
+                LockSupport.park();
+                System.out.println("C");
+                LockSupport.unpark(t1);
             }
         });
 
-        readThread1.start();
-        readThread2.start();
-        writeThread.start();
-
-        try {
-            readThread1.join();
-            readThread2.join();
-            writeThread.join();
-        } catch (InterruptedException e) {
+        t1.start();
+        t2.start();
+        t3.start();
+        try{
+            Thread.sleep(100);
+        }catch (InterruptedException e){
             e.printStackTrace();
         }
+
+        LockSupport.unpark(t1);
     }
 }

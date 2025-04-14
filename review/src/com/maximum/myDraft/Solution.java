@@ -3,32 +3,34 @@ package com.maximum.myDraft;
 import java.util.*;
 
 class Solution {
-    public int trap(int[] height) {
-        int length = height.length;
-        if (length <= 2) return 0;
-        int[] maxLeft = new int[length];
-        int[] maxRight = new int[length];
-
-        // 记录每个柱子左边柱子最大高度
-        maxLeft[0] = height[0];
-        for (int i = 1; i< length; i++) maxLeft[i] = Math.max(height[i], maxLeft[i-1]);
-
-        // 记录每个柱子右边柱子最大高度
-        maxRight[length - 1] = height[length - 1];
-        for(int i = length - 2; i >= 0; i--) maxRight[i] = Math.max(height[i], maxRight[i+1]);
-
-        // 求和
-        int sum = 0;
-        for (int i = 0; i < length; i++) {
-            int count = Math.min(maxLeft[i], maxRight[i]) - height[i];
-            if (count > 0) sum += count;
-        }
-        return sum;
-    }
-
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
-        int res = solution.trap(height);
+        Scanner scanner = new Scanner(System.in);
+        int len = scanner.nextInt();
+        int[] nums = new int[len];
+        int res = 0;
+        if(len == 1){
+            System.out.println(scanner.nextInt());
+        }
+        for (int i = 0; i < len; i++) {
+            nums[i] = scanner.nextInt();
+            res += nums[i];
+            if(i == 0){
+                continue;
+            }
+            if(nums[i] == nums[i - 1] && nums[i] != 1){
+                res += (nums[i] - 1);
+            }
+            if(nums[i] > nums[i - 1] && nums[i - 1] != 1){
+                res += (nums[i - 1] - 1);
+            }
+            if(nums[i] < nums[i - 1]){
+                if(nums[i] == 1){
+                    res += 1;
+                }else{
+                    res += (nums[i] - 1);
+                }
+            }
+        }
+        System.out.println(res);
     }
 }
