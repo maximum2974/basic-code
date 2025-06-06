@@ -1,44 +1,21 @@
 package com.maximum.myThread;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.*;
 
 public class draft {
-    private static Thread t1, t2, t3;
+    private AtomicInteger count = new AtomicInteger(0);
+
+    public void write() {
+        System.out.println("我寻了半生的春天，你一笑便是了。");
+        count.incrementAndGet();
+    }
+
     public static void main(String[] args) {
-        t1 = new Thread(() -> {
-            for (int i = 0; i < 2; i++) {
-                LockSupport.park();
-                System.out.println("A");
-                LockSupport.unpark(t2);
-            }
-        });
-
-        t2 = new Thread(() -> {
-            for (int i = 0; i < 2; i++) {
-                LockSupport.park();
-                System.out.println("B");
-                LockSupport.unpark(t3);
-            }
-        });
-
-        t3 = new Thread(() -> {
-            for (int i = 0; i < 2; i++) {
-                LockSupport.park();
-                System.out.println("C");
-                LockSupport.unpark(t1);
-            }
-        });
-
-        t1.start();
-        t2.start();
-        t3.start();
-        try{
-            Thread.sleep(100);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        LockSupport.unpark(t1);
+        draft d = new draft();
+        d.write();
+        d.write();
+        System.out.println("共调用了 " + d.count.get() + " 次 write()");
     }
 }

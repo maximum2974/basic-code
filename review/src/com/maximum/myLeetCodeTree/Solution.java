@@ -94,28 +94,13 @@ class TreeUtils {
 }
 
 class Solution {
-    public TreeNode sortedArrayToBST(int[] nums) {
-        return sortedArrayToBST(nums, 0, nums.length);
-    }
 
-    public TreeNode sortedArrayToBST(int[] nums, int left, int right){
-        if(left >= right){
-            return null;
-        }
-        if(right - left == 1){
-            return new TreeNode(nums[left]);
-        }
-        int mid = left + (right - left) / 2;
-        TreeNode root = new TreeNode(nums[mid]);
-        root.left = sortedArrayToBST(nums, left, mid);
-        root.right = sortedArrayToBST(nums, mid + 1, right);
-        return root;
-    }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
         TreeUtils treeUtils = new TreeUtils();
-        String data = "[3,5,1,6,2,0,8,null,null,7,4]";
+        String data = "[8,17,21,18,null,null,6]";
         TreeNode root = treeUtils.buildTree(data);
+
     }
 }

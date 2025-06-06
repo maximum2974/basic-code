@@ -3,40 +3,31 @@ package com.maximum.myLeetCode;
 import java.util.*;
 
 public class Solution {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-
-        // 测试用例 1
-        int numCourses1 = 2;
-        int[][] prerequisites1 = {{1, 0}};
-        System.out.println("Test Case 1: " + solution.canFinish(numCourses1, prerequisites1));
+    public int[] dailyTemperatures(int[] temperatures){
+        int len = temperatures.length;
+        int[] res = new int[len];
+        Deque<Integer> stack = new LinkedList<>();
+        stack.push(0);
+        for (int i = 1; i < len; i++) {
+            if(temperatures[i] <= temperatures[stack.peek()]){
+                stack.push(i);
+            }else{
+                while(!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
+                    res[stack.peek()] = i - stack.peek();
+                    stack.pop();
+                }
+                stack.push(i);
+            }
+        }
+        return res;
     }
 
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int[] inDegree = new int[numCourses];
-        List<List<Integer>> umap = new ArrayList<>();
-        for (int i = 0; i < numCourses; i++) {
-            umap.add(new ArrayList<>());
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] temperatures = {73,74,75,71,69,72,76,73};
+        int[] result = solution.dailyTemperatures(temperatures);
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
         }
-        for (int[] prerequisite : prerequisites) {
-            inDegree[prerequisite[0]]++;
-            umap.get(prerequisite[1]).add(prerequisite[0]);
-        }
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if(inDegree[i] == 0){
-                queue.add(i);
-            }
-        }
-        while(!queue.isEmpty()){
-            int pre = queue.poll();
-            numCourses--;
-            for (int cur : umap.get(pre)) {
-                if(--inDegree[cur] == 0){
-                    queue.add(cur);
-                }
-            }
-        }
-        return numCourses == 0;
     }
 }

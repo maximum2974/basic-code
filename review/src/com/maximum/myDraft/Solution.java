@@ -2,35 +2,32 @@ package com.maximum.myDraft;
 
 import java.util.*;
 
-class Solution {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int len = scanner.nextInt();
-        int[] nums = new int[len];
-        int res = 0;
-        if(len == 1){
-            System.out.println(scanner.nextInt());
+public class Solution {
+    private static boolean check(String str){
+        int len = str.length();
+        char[] array = str.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        if(array[0] != '{'){
+            return false;
         }
-        for (int i = 0; i < len; i++) {
-            nums[i] = scanner.nextInt();
-            res += nums[i];
-            if(i == 0){
-                continue;
-            }
-            if(nums[i] == nums[i - 1] && nums[i] != 1){
-                res += (nums[i] - 1);
-            }
-            if(nums[i] > nums[i - 1] && nums[i - 1] != 1){
-                res += (nums[i - 1] - 1);
-            }
-            if(nums[i] < nums[i - 1]){
-                if(nums[i] == 1){
-                    res += 1;
+        stack.push(array[0]);
+        for (int i = 1; i < len; i++) {
+            if(array[i] == '{'){
+                stack.push(array[i]);
+            }else{
+                if(stack.peek() == '{'){
+                    stack.pop();
                 }else{
-                    res += (nums[i] - 1);
+                    stack.push(array[i]);
                 }
             }
         }
-        System.out.println(res);
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int N = scan.nextInt();
+        
     }
 }
